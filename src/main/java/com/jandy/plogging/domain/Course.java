@@ -23,5 +23,5 @@ public class Course {
     private Integer distance;
 
     @ManyToOne
-    private Member member;
+    private Member memberId;
 }
