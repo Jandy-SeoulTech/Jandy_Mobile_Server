@@ -28,13 +28,13 @@ public class Member {
     private List<Course> activityCourse;
 
     @OneToMany
-    private List<Course> favoriteCourse;
+    private List<CourseStorage> favoriteCourse;
 
     @CreatedDate
     private LocalDateTime createdAt;
 
     @Builder
-    public Member(Long id, String name, String email, String userId, String password, List<Course> activityCourse, List<Course> favoriteCourse, LocalDateTime createdAt) {
+    public Member(Long id, String name, String email, String userId, String password, List<Course> activityCourse, List<CourseStorage> favoriteCourse, LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
         this.email = email;
