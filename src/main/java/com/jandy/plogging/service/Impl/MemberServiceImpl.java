@@ -5,19 +5,18 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.jandy.plogging.domain.Member;
+import com.jandy.plogging.dto.MemberSignUpRequest;
 import com.jandy.plogging.repository.MemberRepository;
 import com.jandy.plogging.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.connector.InputBuffer;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
+
 
 @Service
 @RequiredArgsConstructor
@@ -64,6 +63,10 @@ public class MemberServiceImpl implements MemberService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void localSignUp(MemberSignUpRequest memberSignUpRequest) {
+        
 
     }
 

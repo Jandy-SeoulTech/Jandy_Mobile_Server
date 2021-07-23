@@ -8,4 +8,5 @@ public interface MemberService {
 
     void kakaoApiSignUp(String accessToken);
 
+    void localSignUp();
 }
