@@ -16,4 +16,7 @@ public class CourseStorage {
     private Course courseId;
 
     private String review;
+
+    @ManyToOne
+    private Member memberId;
 }

@@ -21,4 +21,7 @@ public class Course {
     private String estimatedTime;
 
     private Integer distance;
+
+    @ManyToOne
+    private Member member;
 }
