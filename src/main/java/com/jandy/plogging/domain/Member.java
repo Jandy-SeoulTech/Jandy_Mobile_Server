@@ -28,13 +28,12 @@ public class Member {
     private LocalDateTime createdAt;
 
     @Builder
-    public Member(Long id, String name, String email, String userId, String password, LocalDateTime createdAt) {
+    public Member(Long id, String name, String email, String userId, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.userId = userId;
         this.password = password;
-        this.createdAt = createdAt;
     }
 
     protected Member() {}
