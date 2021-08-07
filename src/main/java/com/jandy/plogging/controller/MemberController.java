@@ -1,7 +1,9 @@
 package com.jandy.plogging.controller;
 
+import com.jandy.plogging.dto.MemberOAuthResponse;
 import com.jandy.plogging.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -16,11 +18,13 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/oauthKakao")
-    public void kakaoLogin(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<MemberOAuthResponse> kakaoLogin(HttpServletRequest request, HttpServletResponse response) {
         String access_token = request.getHeader("Authorization");
         Long memberId = memberService.kakaoApi(access_token);
         Cookie cookie = new Cookie("memberId", String.valueOf(memberId));
         response.addCookie(cookie);
+        return ResponseEntity.ok()
+                .body(new MemberOAuthResponse(memberId));
     }
 
     @PostMapping("/logout")

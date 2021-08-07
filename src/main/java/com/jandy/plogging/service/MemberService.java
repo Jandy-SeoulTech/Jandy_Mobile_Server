@@ -62,6 +62,7 @@ public class MemberService {
                 Member savedMember = memberRepository.save(member);
                 return savedMember.getId();
             }
+
             return findMember.get().getId();
 
         } catch (IOException e) {
