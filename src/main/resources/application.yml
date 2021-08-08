@@ -12,5 +12,9 @@ spring:
       hibernate:
         format_sql: true
 
+  profiles:
+    include: oauth
+
 logging.level:
   org.hibernate.type : trace
+
