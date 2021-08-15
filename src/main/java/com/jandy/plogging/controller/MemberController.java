@@ -17,14 +17,26 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @PostMapping("/oauthKakao")
-    public ResponseEntity<MemberOAuthResponse> kakaoLogin(HttpServletRequest request, HttpServletResponse response) {
-        String access_token = request.getHeader("Authorization");
-        Long memberId = memberService.kakaoApi(access_token);
+    @GetMapping("/oauthKakao")
+    public ResponseEntity<MemberOAuthResponse> kakaoLogin(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
+        String access_token = servletRequest.getHeader("Authorization");
+        MemberOAuthResponse oAuthResponse = memberService.kakaoApi(access_token);
+        Long memberId = oAuthResponse.getId();
         Cookie cookie = new Cookie("memberId", String.valueOf(memberId));
-        response.addCookie(cookie);
+        servletResponse.addCookie(cookie);
         return ResponseEntity.ok()
-                .body(new MemberOAuthResponse(memberId));
+                .body(oAuthResponse);
+    }
+
+    @GetMapping("/oauthNaver")
+    public ResponseEntity<MemberOAuthResponse> naverLogin(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
+        String access_token = servletRequest.getHeader("Authorization");
+        MemberOAuthResponse oAuthResponse = memberService.naverApi(access_token);
+        Long memberId = oAuthResponse.getId();
+        Cookie cookie = new Cookie("memberId", String.valueOf(memberId));
+        servletResponse.addCookie(cookie);
+        return ResponseEntity.ok()
+                .body(oAuthResponse);
     }
 
     @PostMapping("/logout")

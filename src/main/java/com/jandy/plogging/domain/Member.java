@@ -20,19 +20,17 @@ public class Member {
 
     private String email;
 
-    private String userId;
-
-    private String password;
+    private String profileImage;
 
     @CreatedDate
     private LocalDateTime createdAt;
 
     @Builder
-    public Member(String name, String email, String userId, String password) {
+    public Member(String name, String email, String profileImage, LocalDateTime createdAt) {
         this.name = name;
         this.email = email;
-        this.userId = userId;
-        this.password = password;
+        this.profileImage = profileImage;
+        this.createdAt = createdAt;
     }
 
     protected Member() {}
