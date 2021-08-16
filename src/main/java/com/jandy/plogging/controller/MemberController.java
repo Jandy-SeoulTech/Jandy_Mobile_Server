@@ -1,21 +1,23 @@
 package com.jandy.plogging.controller;
 
 
-import com.jandy.plogging.dto.MemberSignUpResponse;
+import com.jandy.plogging.dto.CreateGoogleMemberResponse;
 import com.jandy.plogging.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-//@RestController
-//@RequiredArgsConstructor
-//@RequestMapping("/api/v1/members")
-//public class MemberController {
-//
-//    private final MemberService memberService;
-//
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/v1/members")
+public class MemberController {
+
+    private final MemberService memberService;
+
 //    @PostMapping("/")
 //    public ResponseEntity<MemberSignUpResponse> signUp() {
 //
@@ -23,5 +25,22 @@ import org.springframework.web.bind.annotation.RestController;
 //        return ResponseEntity.ok()
 //                .body();
 //    }
-//
-//}
+
+    // 구글 로그인
+    @PostMapping("/google")
+    public CreateGoogleMemberResponse saveGoogleMember(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
+        String accessToken=httpServletRequest.getHeader("Authorization");
+        Long id=memberService.joinGoogle(accessToken);
+        Cookie cookie=new Cookie("memberId",String.valueOf(id));
+        httpServletResponse.addCookie(cookie);
+
+        return new CreateGoogleMemberResponse(id);
+    }
+
+    // 구글 로그아웃
+    @GetMapping("/google")
+    public void logoutGoogleMember(HttpServletResponse httpServletResponse){
+        Cookie cookie=new Cookie("memberId",null);
+        httpServletResponse.addCookie(cookie);
+    }
+}
