@@ -22,15 +22,16 @@ public class Member {
 
     private String userId;
 
-    private String password;
+    private String picture;
 
     @CreatedDate
     private LocalDateTime createdAt;
 
     @Builder
-    public Member(String name, String email){
+    public Member(String name, String email, String picture){
         this.name=name;
         this.email=email;
+        this.picture=picture;
     }
 
     @Builder
