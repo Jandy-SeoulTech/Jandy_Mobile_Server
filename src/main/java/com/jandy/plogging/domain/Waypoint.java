@@ -10,7 +10,7 @@ public class Waypoint {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Course courseId;
+    private Course course;
 
     private String lat;
 
