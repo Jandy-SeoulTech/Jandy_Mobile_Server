@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Getter
-public class Member {
+public class Member extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,15 +22,11 @@ public class Member {
 
     private String profileImage;
 
-    @CreatedDate
-    private LocalDateTime createdAt;
-
     @Builder
-    public Member(String name, String email, String profileImage, LocalDateTime createdAt) {
+    public Member(String name, String email, String profileImage) {
         this.name = name;
         this.email = email;
         this.profileImage = profileImage;
-        this.createdAt = createdAt;
     }
 
     protected Member() {}

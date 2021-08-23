@@ -13,10 +13,10 @@ public class CourseStorage {
     private String name;
 
     @OneToOne
-    private Course courseId;
+    private Course course;
 
     private String review;
 
-    @ManyToOne
-    private Member memberId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
 }

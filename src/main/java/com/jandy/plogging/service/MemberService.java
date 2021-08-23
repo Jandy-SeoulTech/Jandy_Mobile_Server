@@ -30,6 +30,8 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
+
+    @Transactional
     public MemberOAuthResponse kakaoApi(String accessToken) {
         String apiUrl = "https://kapi.kakao.com/v2/user/me";
         String responseBody = get(apiUrl, accessToken);
@@ -42,6 +44,7 @@ public class MemberService {
 
         String nickname = profile.getAsJsonObject().get("nickname").getAsString();
         String email = kakaoAccount.getAsJsonObject().get("email").getAsString();
+        String imageUrl = profile.getAsJsonObject().get("profile_image_url").getAsString();
 
         Optional<Member> memberOptional = memberRepository.findMemberByEmail(email);
 
@@ -49,6 +52,7 @@ public class MemberService {
             Member member = Member.builder()
                     .name(nickname)
                     .email(email)
+                    .profileImage(imageUrl)
                     .build();
 
             Member savedMember = memberRepository.save(member);
@@ -60,9 +64,9 @@ public class MemberService {
 
     @Transactional
     public MemberOAuthResponse naverApi(String accessToken) {
-
         String apiURL = "https://openapi.naver.com/v1/nid/me";
         String responseBody = get(apiURL, accessToken);
+
         JsonParser parser = new JsonParser();
         JsonElement element = parser.parse(responseBody);
 
@@ -71,15 +75,16 @@ public class MemberService {
         String profileImage = element.getAsJsonObject().get("profile_image").getAsString();
 
         Optional<Member> memberOptional = memberRepository.findMemberByEmail(email);
+
         if(memberOptional.isPresent()) {
             Member member = memberOptional.get();
             return response(member);
         }
+
         Member member = Member.builder()
                 .name(name)
                 .email(email)
                 .profileImage(profileImage)
-                .createdAt(LocalDateTime.now())
                 .build();
 
         Member savedMember = memberRepository.save(member);
@@ -91,7 +96,7 @@ public class MemberService {
         HttpURLConnection con = connect(apiUrl);
         try {
             con.setRequestMethod("GET");
-            con.setRequestProperty("Authorization", "Bearer" + accessToken);
+            con.setRequestProperty("Authorization", "Bearer " + accessToken);
 
             int responseCode = con.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) { // 정상 호출
