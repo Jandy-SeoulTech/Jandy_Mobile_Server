@@ -30,7 +30,6 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-
     @Transactional
     public MemberOAuthResponse kakaoApi(String accessToken) {
         String apiUrl = "https://kapi.kakao.com/v2/user/me";
@@ -42,24 +41,17 @@ public class MemberService {
         JsonObject kakaoAccount = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
         JsonObject profile = kakaoAccount.getAsJsonObject().get("profile").getAsJsonObject();
 
-        String nickname = profile.getAsJsonObject().get("nickname").getAsString();
+        String name = profile.getAsJsonObject().get("nickname").getAsString();
         String email = kakaoAccount.getAsJsonObject().get("email").getAsString();
-        String imageUrl = profile.getAsJsonObject().get("profile_image_url").getAsString();
+        String profileImage = profile.getAsJsonObject().get("profile_image_url").getAsString();
 
         Optional<Member> memberOptional = memberRepository.findMemberByEmail(email);
 
-        if(memberOptional.isEmpty()) {
-            Member member = Member.builder()
-                    .name(nickname)
-                    .email(email)
-                    .profileImage(imageUrl)
-                    .build();
+        Member member = memberOptional.orElseGet(
+                () -> memberRepository.save(createMember(name,email,profileImage))
+        );
 
-            Member savedMember = memberRepository.save(member);
-            return response(savedMember);
-        }
-
-        return response(memberOptional.get());
+        return response(member);
     }
 
     @Transactional
@@ -76,19 +68,11 @@ public class MemberService {
 
         Optional<Member> memberOptional = memberRepository.findMemberByEmail(email);
 
-        if(memberOptional.isPresent()) {
-            Member member = memberOptional.get();
-            return response(member);
-        }
+        Member member = memberOptional.orElseGet(() ->
+                memberRepository.save(createMember(name,email,profileImage))
+        );
 
-        Member member = Member.builder()
-                .name(name)
-                .email(email)
-                .profileImage(profileImage)
-                .build();
-
-        Member savedMember = memberRepository.save(member);
-        return response(savedMember);
+        return response(member);
     }
 
 
@@ -139,6 +123,14 @@ public class MemberService {
         } catch (IOException e) {
             throw new RuntimeException("API 응답을 읽는데 실패했습니다.", e);
         }
+    }
+
+    private Member createMember(String name, String email, String profileImage) {
+        return Member.builder()
+                .name(name)
+                .email(email)
+                .profileImage(profileImage)
+                .build();
     }
 
     private MemberOAuthResponse response(Member member) {
