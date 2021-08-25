@@ -47,8 +47,8 @@ public class MemberService {
 
         Optional<Member> memberOptional = memberRepository.findMemberByEmail(email);
 
-        Member member = memberOptional.orElseGet(
-                () -> memberRepository.save(createMember(name,email,profileImage))
+        Member member = memberOptional.orElseGet(() ->
+                memberRepository.save(createMember(name,email,profileImage))
         );
 
         return response(member);
