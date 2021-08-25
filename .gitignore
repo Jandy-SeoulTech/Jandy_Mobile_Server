@@ -5,6 +5,9 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+## 구글 로그인
+application-oauth.properties
+
 ### STS ###
 .apt_generated
 .classpath

@@ -18,9 +18,26 @@ dependencies {
 	implementation 'mysql:mysql-connector-java'
 	implementation 'org.projectlombok:lombok:1.18.18'
 	implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
+	implementation 'junit:junit:4.12'
+	implementation 'junit:junit:4.12'
+	implementation 'junit:junit:4.12'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	//h2
+	implementation 'com.h2database:h2'
+	runtimeOnly 'com.h2database:h2'
+
+	//google sso
+	implementation group: 'com.google.api-client', name: 'google-api-client-jackson2', version: '1.30.10'
+	implementation 'com.google.api-client:google-api-client:1.31.2'
+
+	//json
+	implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
+
+	// test
+	implementation group : 'org.mockito', name:'mockito-core', version:'1.9.5'
 }
 
 test {
