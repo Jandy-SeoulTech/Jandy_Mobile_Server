@@ -3,6 +3,8 @@ package com.jandy.plogging.controller;
 import com.jandy.plogging.dto.CreateGoogleMemberResponse;
 import com.jandy.plogging.dto.MemberOAuthResponse;
 import com.jandy.plogging.service.MemberService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+@Api(tags = "회원")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/members")
@@ -22,6 +25,7 @@ public class MemberController {
 
 
     // 구글 로그인
+    @ApiOperation(value = "구글 로그인")
     @PostMapping("/google")
     public ResponseEntity<CreateGoogleMemberResponse> loginGoogleMember(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
         String accessToken=httpServletRequest.getHeader("Authorization");
@@ -40,6 +44,7 @@ public class MemberController {
         httpServletResponse.addCookie(cookie);
     }
 
+    @ApiOperation(value = "카카오 로그인")
     @GetMapping("/oauthKakao")
     public ResponseEntity<MemberOAuthResponse> kakaoLogin(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
         String access_token = servletRequest.getHeader("Authorization");
@@ -51,6 +56,7 @@ public class MemberController {
                 .body(oAuthResponse);
     }
 
+    @ApiOperation(value = "네이버 로그인")
     @GetMapping("/oauthNaver")
     public ResponseEntity<MemberOAuthResponse> naverLogin(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
         String access_token = servletRequest.getHeader("Authorization");

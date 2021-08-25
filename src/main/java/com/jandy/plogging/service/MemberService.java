@@ -88,7 +88,7 @@ public class MemberService {
         Optional<Member> memberOptional = memberRepository.findMemberByEmail(email);
 
         Member member = memberOptional.orElseGet(() ->
-                memberRepository.save(createMember(name,email,profileImage))
+                memberRepository.save(new Member(name,email,profileImage))
         );
 
         return response(member);
@@ -109,7 +109,7 @@ public class MemberService {
         Optional<Member> memberOptional = memberRepository.findMemberByEmail(email);
 
         Member member = memberOptional.orElseGet(() ->
-                memberRepository.save(createMember(name,email,profileImage))
+                memberRepository.save(new Member(name,email,profileImage))
         );
 
         return response(member);
@@ -163,14 +163,6 @@ public class MemberService {
         } catch (IOException e) {
             throw new RuntimeException("API 응답을 읽는데 실패했습니다.", e);
         }
-    }
-
-    private Member createMember(String name, String email, String profileImage) {
-        return Member.builder()
-                .name(name)
-                .email(email)
-                .profileImage(profileImage)
-                .build();
     }
 
     private MemberOAuthResponse response(Member member) {

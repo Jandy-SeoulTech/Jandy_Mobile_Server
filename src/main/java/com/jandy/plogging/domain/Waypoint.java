@@ -12,7 +12,7 @@ public class Waypoint {
     @ManyToOne(fetch = FetchType.LAZY)
     private Course course;
 
-    private String lat;
+    private String latitude;
 
-    private String lon;
+    private String longitude;
 }
