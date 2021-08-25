@@ -27,7 +27,6 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-
     public static String googleURL = "https://oauth2.googleapis.com/tokeninfo?id_token=";
 
     @Transactional
@@ -70,6 +69,7 @@ public class MemberService {
         }
 
     }
+  
     @Transactional
     public MemberOAuthResponse kakaoApi(String accessToken) {
         String apiUrl = "https://kapi.kakao.com/v2/user/me";
@@ -81,24 +81,17 @@ public class MemberService {
         JsonObject kakaoAccount = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
         JsonObject profile = kakaoAccount.getAsJsonObject().get("profile").getAsJsonObject();
 
-        String nickname = profile.getAsJsonObject().get("nickname").getAsString();
+        String name = profile.getAsJsonObject().get("nickname").getAsString();
         String email = kakaoAccount.getAsJsonObject().get("email").getAsString();
-        String imageUrl = profile.getAsJsonObject().get("profile_image_url").getAsString();
+        String profileImage = profile.getAsJsonObject().get("profile_image_url").getAsString();
 
         Optional<Member> memberOptional = memberRepository.findMemberByEmail(email);
 
-        if(memberOptional.isEmpty()) {
-            Member member = Member.builder()
-                    .name(nickname)
-                    .email(email)
-                    .profileImage(imageUrl)
-                    .build();
+        Member member = memberOptional.orElseGet(() ->
+                memberRepository.save(new Member(name,email,profileImage))
+        );
 
-            Member savedMember = memberRepository.save(member);
-            return response(savedMember);
-        }
-
-        return response(memberOptional.get());
+        return response(member);
     }
 
     @Transactional
@@ -115,19 +108,11 @@ public class MemberService {
 
         Optional<Member> memberOptional = memberRepository.findMemberByEmail(email);
 
-        if(memberOptional.isPresent()) {
-            Member member = memberOptional.get();
-            return response(member);
-        }
+        Member member = memberOptional.orElseGet(() ->
+                memberRepository.save(new Member(name,email,profileImage))
+        );
 
-        Member member = Member.builder()
-                .name(name)
-                .email(email)
-                .profileImage(profileImage)
-                .build();
-
-        Member savedMember = memberRepository.save(member);
-        return response(savedMember);
+        return response(member);
     }
 
 
