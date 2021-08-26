@@ -30,25 +30,28 @@ public class MemberService {
     public static String googleURL = "https://oauth2.googleapis.com/tokeninfo?id_token=";
 
     @Transactional
-    public Long joinGoogle(String accessToken) {
+    public MemberOAuthResponse joinGoogle(String accessToken) {
         String urlString=googleURL+accessToken;
 
         String line=getGoogleJson(urlString);
 
         JsonParser jsonParser = new JsonParser();
+        System.out.println(line);
         JsonObject jsonObject = (JsonObject) jsonParser.parse(line);
         String email = jsonObject.get("email").getAsString();
         String name=jsonObject.get("name").getAsString();
         String picture=jsonObject.get("picture").getAsString();
 
-        Optional<Member> member=memberRepository.findByEmail(email);
+        Optional<Member> member=memberRepository.findMemberByEmail(email);
 
         if(member.isEmpty()){
-            Member newMember=new Member(email,name,picture);
-            return newMember.getId();
+            Member newMember=new Member(name,email,picture);
+            memberRepository.save(newMember);
+            System.out.println(newMember.getId());
+            return response(newMember);
         }
 
-        return member.get().getId();
+        return response(member.get());
     }
 
     public String getGoogleJson(String urlString){
@@ -58,14 +61,15 @@ public class MemberService {
             URL url=new URL(urlString);
             URLConnection urlConnection=url.openConnection();
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
 
-            String line = br.readLine();
+            String line = readBody(urlConnection.getInputStream());
+
+            System.out.println(line);
 
             return line;
 
         } catch (IOException e) {
-            throw new IllegalArgumentException("url 요청 실패");
+            throw new IllegalArgumentException("인증 실패");
         }
 
     }

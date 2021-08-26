@@ -27,14 +27,14 @@ public class MemberController {
     // 구글 로그인
     @ApiOperation(value = "구글 로그인")
     @PostMapping("/google")
-    public ResponseEntity<CreateGoogleMemberResponse> loginGoogleMember(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
+    public ResponseEntity<MemberOAuthResponse> loginGoogleMember(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
         String accessToken=httpServletRequest.getHeader("Authorization");
-        Long id=memberService.joinGoogle(accessToken);
+        MemberOAuthResponse memberOAuthResponse=memberService.joinGoogle(accessToken);
 
-        Cookie cookie=new Cookie("memberId",String.valueOf(id));
+        Cookie cookie=new Cookie("memberId",String.valueOf(memberOAuthResponse.getId()));
         httpServletResponse.addCookie(cookie);
 
-        return new ResponseEntity<>(new CreateGoogleMemberResponse(id), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(memberOAuthResponse, HttpStatus.ACCEPTED);
     }
 
     // 구글 로그아웃

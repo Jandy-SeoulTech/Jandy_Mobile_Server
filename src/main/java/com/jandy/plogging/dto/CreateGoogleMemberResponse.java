@@ -1,5 +1,10 @@
 package com.jandy.plogging.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class CreateGoogleMemberResponse {
 
     private Long id;
