@@ -101,10 +101,11 @@ public class MemberService {
 
         JsonParser parser = new JsonParser();
         JsonElement element = parser.parse(responseBody);
+        JsonObject response = element.getAsJsonObject().get("response").getAsJsonObject();
 
-        String email = element.getAsJsonObject().get("email").getAsString();
-        String name = element.getAsJsonObject().get("name").getAsString();
-        String profileImage = element.getAsJsonObject().get("profile_image").getAsString();
+        String name = response.getAsJsonObject().get("name").getAsString();
+        String email = response.getAsJsonObject().get("email").getAsString();
+        String profileImage = response.getAsJsonObject().get("profile_image").getAsString();
 
         Optional<Member> memberOptional = memberRepository.findMemberByEmail(email);
 
