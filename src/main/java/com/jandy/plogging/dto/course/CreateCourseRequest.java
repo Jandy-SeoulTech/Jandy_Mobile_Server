@@ -1,7 +1,6 @@
 package com.jandy.plogging.dto.course;
 
 
-import com.jandy.plogging.domain.Waypoint;
 import com.jandy.plogging.dto.waypoint.WaypointDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
