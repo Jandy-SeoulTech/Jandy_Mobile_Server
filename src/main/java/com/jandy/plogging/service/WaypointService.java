@@ -1,6 +1,5 @@
 package com.jandy.plogging.service;
 
-import com.jandy.plogging.controller.WaypointController;
 import com.jandy.plogging.repository.WaypointRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

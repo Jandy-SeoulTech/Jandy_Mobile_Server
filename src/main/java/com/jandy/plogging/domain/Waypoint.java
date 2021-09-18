@@ -1,8 +1,12 @@
 package com.jandy.plogging.domain;
 
+import lombok.Builder;
+import lombok.Getter;
+
 import javax.persistence.*;
 
 @Entity
+@Getter
 public class Waypoint {
 
     @Id
@@ -15,4 +19,12 @@ public class Waypoint {
     private String latitude;
 
     private String longitude;
+
+    public Waypoint(Course course, String latitude, String longitude) {
+        this.course = course;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    protected Waypoint() {}
 }

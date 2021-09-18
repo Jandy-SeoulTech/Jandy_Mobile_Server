@@ -120,6 +120,13 @@ public class MemberService {
         return response(member);
     }
 
+    @Transactional
+    public MemberOAuthResponse loginById(Long id) {
+        Optional<Member> memberOptional = memberRepository.findById(id);
+        Member member = memberOptional.orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다"));
+        return response(member);
+    }
+
 
     private String get(String apiUrl, String accessToken) {
         HttpURLConnection con = connect(apiUrl);

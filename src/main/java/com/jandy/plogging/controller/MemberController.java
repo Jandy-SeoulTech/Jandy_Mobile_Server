@@ -23,6 +23,15 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    @ApiOperation(value = "id 로그인")
+    @GetMapping("/login/{id}")
+    public ResponseEntity<MemberOAuthResponse> loginMember(@PathVariable Long id, HttpServletResponse servletResponse) {
+        MemberOAuthResponse oAuthResponse = memberService.loginById(id);
+        Long memberId = oAuthResponse.getId();
+        Cookie cookie = new Cookie("memberId", String.valueOf(memberId));
+        servletResponse.addCookie(cookie);
+        return ResponseEntity.ok().body(oAuthResponse);
+    }
 
     // 구글 로그인
     @ApiOperation(value = "구글 로그인")
