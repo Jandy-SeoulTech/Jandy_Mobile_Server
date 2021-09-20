@@ -1,22 +1,40 @@
 package com.jandy.plogging.domain;
 
 
+import com.jandy.plogging.dto.courseStorageSaveRequest;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
+@Getter
+@NoArgsConstructor
 @Entity
-public class CourseStorage {
+public class CourseStorage extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private Long courseId;
 
-    @OneToOne
-    private Course course;
+    private String title;
 
-    private String review;
+    private Long trashCan;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Member member;
+    private Long trashStatus;
+
+    private Long memberId;
+
+    @Builder
+    public CourseStorage(Long courseId, String title, Long trashCan, Long trashStatus, Long memberId) {
+        this.courseId = courseId;
+        this.title = title;
+        this.trashCan = trashCan;
+        this.trashStatus = trashStatus;
+        this.memberId = memberId;
+    }
+
+
 }
