@@ -11,6 +11,11 @@ public class SpringConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginCheckFilter())
                 .addPathPatterns("/**")
+                .excludePathPatterns(
+                        "/v2/api-docs",
+                        "/swagger-resources/**",
+                        "/swagger-ui.html",
+                        "/webjars/**")
                 .excludePathPatterns("/api/v1/members/*");
     }
 }
