@@ -1,8 +1,11 @@
 package com.jandy.plogging.domain;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 
 @Entity
+@Getter
 public class WishList extends BaseTimeEntity {
 
     @Id
