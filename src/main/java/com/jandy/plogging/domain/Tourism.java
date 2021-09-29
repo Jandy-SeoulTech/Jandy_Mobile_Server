@@ -15,5 +15,12 @@ public class Tourism {
 
     private String name;
 
+    private String address;
+
+    private String phoneNumber;
+
+    private String operatingTime;
+
     private String review;
+    
 }
