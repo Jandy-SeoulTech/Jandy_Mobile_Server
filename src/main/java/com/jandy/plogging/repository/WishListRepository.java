@@ -14,7 +14,9 @@ public interface WishListRepository extends JpaRepository<WishList, Long> {
 
     List<WishList> findWishListsByMember(Member member);
 
-    @Query("delete from WishList where id in :ids")
-    void deleteAllByIdInQuery(@Param("ids") List<Long> ids);
+    @Transactional
+    @Modifying
+    @Query("delete from WishList w where w.id in :ids and w.member = :member")
+    void deleteAllByIdInQuery(@Param("ids") List<Long> ids, Member member);
 
 }

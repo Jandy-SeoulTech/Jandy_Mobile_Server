@@ -4,14 +4,15 @@ import com.jandy.plogging.domain.Member;
 import com.jandy.plogging.domain.Tourism;
 import com.jandy.plogging.domain.WishList;
 import com.jandy.plogging.dto.tourism.TourismDto;
-import com.jandy.plogging.dto.wishList.WishListDto;
-import com.jandy.plogging.dto.wishList.WishListReadResponse;
+import com.jandy.plogging.dto.wishList.*;
 import com.jandy.plogging.repository.MemberRepository;
 import com.jandy.plogging.repository.TourismRepository;
 import com.jandy.plogging.repository.WishListRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,10 +25,22 @@ public class WishListService {
     private final TourismRepository tourismRepository;
     private final MemberRepository memberRepository;
 
-    public void addWishList() {
+    public WishListAddResponse addWishList(AddWishListRequest request, Long memberId) {
 
+        Optional<Member> memberOptional = memberRepository.findById(memberId);
+        Member member = memberOptional.orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다."));
+
+        Optional<Tourism> tourismOptional = tourismRepository.findById(request.getTourismId());
+        Tourism tourism = tourismOptional.orElseThrow(() -> new IllegalStateException("존재하지 않는 관광지입니다."));
+
+        WishList wishList = new WishList(tourism, member);
+
+        WishList savedWishList = wishListRepository.save(wishList);
+
+        return new WishListAddResponse(savedWishList.getId());
     }
 
+    @Transactional
     public WishListReadResponse readWishList(Long memberId) {
         Optional<Member> memberOptional = memberRepository.findById(memberId);
         Member member = memberOptional.orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다."));
@@ -44,16 +57,12 @@ public class WishListService {
                 .map(this::createTourismDto)
                 .collect(Collectors.toList());
 
-        List<WishListDto> collect = null;
+        List<WishListDto> collect = new ArrayList<>();
+
         for (WishList wishList : wishLists) {
             WishListDto wishListDto = new WishListDto();
             wishListDto.setId(wishList.getId());
-//            tourismList.stream().map((tourism) -> tourism.getId().equals(wishList.getTourism().getId()));
-//            for(TourismDto tourism : tourismDtoList) {
-//                if(wishList.getTourism().getId().equals(tourism.getId())) {
-//                    wishListDto.setTourism(tourism);
-//                }
-//            }
+
             Optional<TourismDto> tourismDtoOptional = tourismDtoList.stream()
                     .filter(tourismDto -> wishList.getTourism().getId().equals(tourismDto.getId()))
                     .findFirst();
@@ -62,16 +71,21 @@ public class WishListService {
             wishListDto.setTourism(tourism);
             collect.add(wishListDto);
         }
+        Long count = collect.stream().count();
 
-        return new WishListReadResponse(collect.size(), collect);
+        return new WishListReadResponse(count, collect);
     }
 
-    public void deleteWishList(Long memberId) {
+    public void deleteWishList(DeleteWishListRequest request, Long memberId) {
+
+        Optional<Member> memberOptional = memberRepository.findById(memberId);
+        Member member = memberOptional.orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다"));
+        wishListRepository.deleteAllByIdInQuery(request.getWishListIds(), member);
 
     }
 
     private TourismDto createTourismDto(Tourism tourism) {
-        return new TourismDto(tourism.getId(), tourism.getName(), tourism.getDescription(), tourism.getAddress(), tourism.getPhoneNumber(), tourism.getOperatingTime(), tourism.getReview());
+        return new TourismDto(tourism.getId(), tourism.getName(), tourism.getDescription(), tourism.getAddress(), tourism.getPhoneNumber(), tourism.getOperatingTime());
     }
 
 }

@@ -1,5 +1,6 @@
 package com.jandy.plogging.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -18,4 +19,11 @@ public class WishList extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
+    protected WishList() {
+    }
+
+    public WishList(Tourism tourism, Member member) {
+        this.tourism = tourism;
+        this.member = member;
+    }
 }

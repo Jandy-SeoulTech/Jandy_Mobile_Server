@@ -17,6 +17,4 @@ public class TourismDto {
     private String phoneNumber;
 
     private String operatingTime;
-
-    private String review;
 }

@@ -9,8 +9,10 @@ public class Image extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private WishList wishList;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Tourism tourism;
+
+    private Member member;
 
 
 
