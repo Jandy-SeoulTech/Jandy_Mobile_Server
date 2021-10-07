@@ -3,10 +3,7 @@ package com.jandy.plogging.domain;
 
 import lombok.Getter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -26,6 +23,9 @@ public class Tourism {
 
     private String operatingTime;
 
-    private String review;
+    private String category;
+
+    @OneToOne
+    private Image thumbnail;
     
 }

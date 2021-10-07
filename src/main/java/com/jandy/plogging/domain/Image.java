@@ -9,11 +9,14 @@ public class Image extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Tourism tourism;
+    private String uploadImageName;
 
-    private Member member;
+    private String storeImageName;
 
+    public Image(String uploadImageName, String storeImageName) {
+        this.uploadImageName = uploadImageName;
+        this.storeImageName = storeImageName;
+    }
 
-
+    protected Image() {}
 }
