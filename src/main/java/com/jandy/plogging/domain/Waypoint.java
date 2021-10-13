@@ -13,12 +13,13 @@ public class Waypoint {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Course course;
-
     private String latitude;
 
     private String longitude;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    private Course course;
 
     public Waypoint(Course course, String latitude, String longitude) {
         this.course = course;

@@ -16,4 +16,5 @@ spring:
 logging.level:
   org.hibernate.type : trace
 
-fileDir: "C:\\Users\\user\\Jandy_Mobile_Server\\src\\main\\resources\\images\\"
+file:
+  dir: "C:\\Users\\user\\Jandy_Mobile_Server\\src\\main\\resources\\images\\"

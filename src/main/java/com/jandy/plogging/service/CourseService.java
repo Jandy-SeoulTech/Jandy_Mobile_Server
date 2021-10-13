@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 @RequiredArgsConstructor
 public class CourseService {
@@ -31,29 +33,16 @@ public class CourseService {
         Optional<Member> memberOptional = memberRepository.findById(request.getMemberId());
         Member member = memberOptional.orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다."));
 
-        Course course = Course.builder()
-                .startX(request.getStartX())
-                .startY(request.getStartY())
-                .endX(request.getEndX())
-                .endY(request.getEndY())
-                .estimatedTime(request.getTime())
-                .distance(request.getDistance())
-                .member(member)
-                .build();
+        Course course = request.toEntity(member);
 
         Course savedCourse = courseRepository.save(course);
 
         List<Waypoint> waypoints = request.getWaypoints()
                 .stream()
                 .map(waypoint -> new Waypoint(savedCourse, waypoint.getLatitude(), waypoint.getLongitude()))
-                .collect(Collectors.toList());
+                .collect(toList());
 
         waypointRepository.saveAll(waypoints);
-        return response(savedCourse);
+        return CreateCourseResponse.from(savedCourse);
     }
-
-    private CreateCourseResponse response(Course savedCourse) {
-        return new CreateCourseResponse(savedCourse.getId(), savedCourse.getStartX(), savedCourse.getStartY(), savedCourse.getEndX(), savedCourse.getEndY(), savedCourse.getEstimatedTime(), savedCourse.getDistance());
-    }
-
 }

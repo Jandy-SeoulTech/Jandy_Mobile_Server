@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,13 +15,8 @@ public class Course extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String startX;
-
-    private String startY;
-
-    private String endX;
-
-    private String endY;
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+    private List<Waypoint> waypoints = new ArrayList<>();
 
     private String estimatedTime;
 
@@ -30,11 +26,7 @@ public class Course extends BaseTimeEntity {
     private Member member;
 
     @Builder
-    public Course(String startX, String startY, String endX, String endY, String estimatedTime, Integer distance, Member member) {
-        this.startX = startX;
-        this.startY = startY;
-        this.endX = endX;
-        this.endY = endY;
+    public Course(String estimatedTime, Integer distance, Member member) {
         this.estimatedTime = estimatedTime;
         this.distance = distance;
         this.member = member;

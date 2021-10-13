@@ -23,7 +23,7 @@ public class ImageService {
 
     private final ImageRepository imageRepository;
 
-    @Value("${fileDir}")
+    @Value("${file.dir}")
     private String fileDir;
 
     public String getFullPath(String fileName) {
@@ -36,9 +36,9 @@ public class ImageService {
         for(MultipartFile multipartFile : multipartFiles) {
             if(!multipartFile.isEmpty()) {
                 String originalFilename = multipartFile.getOriginalFilename();
-                String storeFileName = createStoreFileName(originalFilename);
-                multipartFile.transferTo(new File(getFullPath(storeFileName)));
-                Name name = new Name(originalFilename, storeFileName);
+                String storeFilename = createStoreFileName(originalFilename);
+                multipartFile.transferTo(new File(getFullPath(storeFilename)));
+                Name name = new Name(originalFilename, storeFilename);
                 collect.add(name);
             }
         }
@@ -47,6 +47,15 @@ public class ImageService {
                 .map((name) -> new Image(name.getOriginalFilename(), name.getStoreFileName()))
                 .collect(Collectors.toList());
         imageRepository.saveAll(images);
+    }
+
+    public Image storeFile(MultipartFile multipartFile) throws IOException {
+
+        String originalFilename = multipartFile.getOriginalFilename();
+        String storeFilename = createStoreFileName(originalFilename);
+        multipartFile.transferTo(new File(getFullPath(storeFilename)));
+        Image image = new Image(originalFilename, storeFilename);
+        return imageRepository.save(image);
     }
 
     private String createStoreFileName(String originalFilename) {
