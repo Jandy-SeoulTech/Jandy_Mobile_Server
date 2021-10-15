@@ -38,11 +38,7 @@ public class ReviewController {
     public CreateCourseReviewResponse inputReview(@PathVariable String courseId, CreateCourseReviewRequest request) throws IOException {
 
         Long id = Long.parseLong(courseId);
-
-
-        System.out.println(request.getContent());
-        System.out.println(request.getFile());
-
+        
         List<Image> images=imageService.storeFiles(request.getFile());
 
         Long reviewId = reviewService.saveReview(images, id, request);
