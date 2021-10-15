@@ -1,8 +1,13 @@
 package com.jandy.plogging.dto.course;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Getter
+@AllArgsConstructor
 public class CreateCourseReviewRequest {
 
     private String email;
@@ -11,9 +16,7 @@ public class CreateCourseReviewRequest {
 
     private String content;
 
-    CreateCourseReviewRequest(String content){
+    private List<MultipartFile> file;
 
-        this.content = content;
-    }
 
 }

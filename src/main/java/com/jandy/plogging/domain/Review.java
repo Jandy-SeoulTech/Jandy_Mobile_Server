@@ -30,7 +30,8 @@ public class Review extends BaseTimeEntity{
     @JoinColumn(name="course_id")
     private Course course;
 
-    @OneToMany(mappedBy = "image")
+    @OneToMany
+    @JoinColumn(name="image_id")
     private List<Image> imageList;
 
     private String content;

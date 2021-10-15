@@ -35,15 +35,15 @@ public class ReviewController {
 
     // 코스 리뷰 입력
     @PostMapping("/{courseId}/review")
-    public CreateCourseReviewResponse inputReview(@PathVariable String courseId, @RequestBody CreateCourseReviewRequest request, HttpServletRequest httpServletRequest) throws IOException {
+    public CreateCourseReviewResponse inputReview(@PathVariable String courseId, CreateCourseReviewRequest request) throws IOException {
 
         Long id = Long.parseLong(courseId);
 
 
-        MultipartHttpServletRequest multi = (MultipartHttpServletRequest) httpServletRequest;
-        List<MultipartFile> file = multi.getFiles("file");
+        System.out.println(request.getContent());
+        System.out.println(request.getFile());
 
-        List<Image> images=imageService.storeFiles(file);
+        List<Image> images=imageService.storeFiles(request.getFile());
 
         Long reviewId = reviewService.saveReview(images, id, request);
 
