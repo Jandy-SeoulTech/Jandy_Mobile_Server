@@ -7,7 +7,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
@@ -16,4 +16,4 @@ spring:
 logging.level:
   org.hibernate.type : trace
 
-fileDir: "C:\\Users\\user\\Jandy_Mobile_Server\\src\\main\\resources\\images\\"
+fileDir: "C:\\Users\\user\\Desktop\\Jandy_Mobile_Server\\src\\main\\resources\\images\\"

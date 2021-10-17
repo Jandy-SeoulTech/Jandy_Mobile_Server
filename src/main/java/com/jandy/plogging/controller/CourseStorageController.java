@@ -17,7 +17,7 @@ public class CourseStorageController {
 
     private final CourseStorageService courseStorageService;
 
-    @PostMapping("")
+    @PostMapping("/")
     public saveResponse save(@RequestBody courseStorageSaveRequest request){
         Long id = courseStorageService.save(request);
         return new saveResponse(id);
