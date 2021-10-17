@@ -26,19 +26,19 @@ public class ReviewController {
     private final ImageService imageService;
 
     // 코스 리뷰 리스트
-    @GetMapping("/{courseId}/review")
-    public List<CourseReviewListResponse> showReview(@PathVariable String courseId){
-        Long id = Long.parseLong(courseId);
+    @GetMapping("/review/{locationId}")
+    public List<CourseReviewListResponse> showReview(@PathVariable String locationId){
+        Long id = Long.parseLong(locationId);
         return reviewService.showReview(id);
     }
 
 
-    // 코스 리뷰 입력
-    @PostMapping("/{courseId}/review")
-    public CreateCourseReviewResponse inputReview(@PathVariable String courseId, CreateCourseReviewRequest request) throws IOException {
+    // 관광지 리뷰 입력
+    @PostMapping("/review/{locationId}")
+    public CreateCourseReviewResponse inputReview(@PathVariable String locationId, CreateCourseReviewRequest request) throws IOException {
 
-        Long id = Long.parseLong(courseId);
-        
+        Long id = Long.parseLong(locationId);
+
         List<Image> images=imageService.storeFiles(request.getFile());
 
         Long reviewId = reviewService.saveReview(images, id, request);

@@ -21,14 +21,14 @@ public class Review extends BaseTimeEntity{
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="member_name")
+    @JoinColumn(name="member_id")
     private Member member;
 
     private Long rating;
 
     @ManyToOne
-    @JoinColumn(name="course_id")
-    private Course course;
+    @JoinColumn(name = "tourism_id")
+    private Tourism tourism;
 
     @OneToMany
     @JoinColumn(name="image_id")
@@ -37,10 +37,10 @@ public class Review extends BaseTimeEntity{
     private String content;
 
     @Builder
-    public Review(Member member, Long rating, Course course, List<Image> images, String content) {
+    public Review(Member member, Long rating, Tourism tourism, List<Image> images, String content) {
         this.member = member;
         this.rating = rating;
-        this.course = course;
+        this.tourism = tourism;
         this.imageList = images;
         this.content = content;
     }

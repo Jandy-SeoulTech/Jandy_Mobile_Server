@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CreateCourseReviewRequest {
 
-    private String email;
+    private Long memberId;
 
     private Long rating;
 

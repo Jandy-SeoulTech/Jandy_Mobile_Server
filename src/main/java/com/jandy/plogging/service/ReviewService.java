@@ -1,15 +1,13 @@
 package com.jandy.plogging.service;
 
-import com.jandy.plogging.domain.Course;
-import com.jandy.plogging.domain.Image;
-import com.jandy.plogging.domain.Member;
-import com.jandy.plogging.domain.Review;
+import com.jandy.plogging.domain.*;
 import com.jandy.plogging.dto.course.CourseReviewListResponse;
 import com.jandy.plogging.dto.course.CreateCourseReviewRequest;
 import com.jandy.plogging.dto.course.UpdateCourseReviewRequest;
 import com.jandy.plogging.repository.CourseRepository;
 import com.jandy.plogging.repository.MemberRepository;
 import com.jandy.plogging.repository.ReviewRepository;
+import com.jandy.plogging.repository.TourismRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,21 +19,21 @@ import java.util.Optional;
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
-    private final CourseRepository courseRepository;
+    private final TourismRepository tourismRepository;
     private final MemberRepository memberRepository;
 
-    public List<CourseReviewListResponse> showReview(Long courseId){
-        return reviewRepository.findByCourseId(courseId);
+    public List<CourseReviewListResponse> showReview(Long tourismId){
+        return reviewRepository.findByTourism_Id(tourismId);
     }
 
-    public Long saveReview(List<Image> images, Long courseId, CreateCourseReviewRequest request){
+    public Long saveReview(List<Image> images, Long tourismId, CreateCourseReviewRequest request){
 
-        Optional<Course> course = courseRepository.findById(courseId);
-        Optional<Member> member = memberRepository.findMemberByEmail(request.getEmail());
+        Optional<Tourism> tourism = tourismRepository.findById(tourismId);
+        Optional<Member> member = memberRepository.findById(request.getMemberId());
 
-        if (course.isPresent() && member.isPresent()) {
+        if (tourism.isPresent() && member.isPresent()) {
             Review review = Review.builder()
-                    .course(course.get())
+                    .tourism(tourism.get())
                     .content(request.getContent())
                     .rating(request.getRating())
                     .images(images)
