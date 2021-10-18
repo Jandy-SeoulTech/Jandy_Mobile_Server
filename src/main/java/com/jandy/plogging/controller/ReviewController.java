@@ -47,6 +47,14 @@ public class ReviewController {
     }
 
 
+    // 관광지 리뷰 별점
+    @GetMapping("/review/{locationId}/rating")
+    public Long getRating(@PathVariable String locationId){
+        Long id = Long.parseLong(locationId);
+        return reviewService.totalRating(id);
+    }
+
+
     @Data
     @AllArgsConstructor
     static class UpdateCourseReviewResponse{

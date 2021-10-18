@@ -18,7 +18,7 @@ public class LoginCheckFilter implements HandlerInterceptor {
         Cookie[] cookies = request.getCookies();
         if(cookies == null) {
             System.out.println("쿠키가 존재하지 않습니다");
-            return false;
+            return true;
         }
 
         return true;
