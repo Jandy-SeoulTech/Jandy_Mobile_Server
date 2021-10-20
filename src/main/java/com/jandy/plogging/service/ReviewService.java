@@ -29,7 +29,7 @@ public class ReviewService {
     private final MemberRepository memberRepository;
     private final CourseRepository courseRepository;
 
-    @Value("${fileDir}")
+    @Value("${file.dir}")
     private String fileDir;
 
     @Transactional
@@ -55,25 +55,7 @@ public class ReviewService {
             make.setReview_id(review.getId());
             make.setCreate_time(review.getCreatedDate());
 
-            List<byte[]> image_list = new ArrayList<>();
-            try{
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                for (Image image : review.getImageList()) {
-
-
-                    BufferedImage original = ImageIO.read(new File(fileDir + image.getStoreImageName()));
-                    ImageIO.write(original, "png", baos);
-                    baos.flush();
-                    image_list.add(baos.toByteArray());
-
-
-                }
-                baos.close();
-                make.setImages(image_list);
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-
+            make.setImages(getImageList(review));
 
             make.setRating(review.getRating());
             make.setMember_name(review.getMember().getName());
@@ -92,6 +74,10 @@ public class ReviewService {
         Optional<Course> course = courseRepository.findById(request.getCourseId());
 
         if (tourism.isPresent() && member.isPresent() && course.isPresent()) {
+
+
+
+
             Review review = Review.builder()
                     .course(course.get())
                     .tourism(tourism.get())
@@ -113,6 +99,7 @@ public class ReviewService {
     @Transactional
     public OtherReviewResponse getOtherReview(Long reviewId) {
         Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
+        OtherReviewResponse otherReviewResponse = null;
 
         if (reviewOptional.isPresent()) {
 
@@ -120,16 +107,42 @@ public class ReviewService {
             Member member = review.getMember();
             Course course = review.getCourse();
 
-            OtherReviewResponse otherReviewResponse= OtherReviewResponse.builder()
+           otherReviewResponse = OtherReviewResponse.builder()
                     .content(review.getContent())
                     .localDate(review.getCreatedDate().toLocalDate())
-                    .endAddress(course).build()
-
-
+                    .endAddress(course.getEndLocation())
+                    .startAddress(course.getStartLocation())
+                    .time(course.getEstimatedTime())
+                    .userName(member.getName())
+                    .images(getImageList(review))
+                    .rating(review.getRating()).build();
 
         }
 
+        return otherReviewResponse;
+    }
 
+    public List<byte[]> getImageList(Review review) {
+        List<byte[]> image_list = new ArrayList<>();
+        try{
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            for (Image image : review.getImageList()) {
+
+
+                BufferedImage original = ImageIO.read(new File(fileDir + image.getStoreImageName()));
+                ImageIO.write(original, "png", baos);
+                baos.flush();
+                image_list.add(baos.toByteArray());
+
+
+            }
+            baos.close();
+
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+        return image_list;
     }
 
 
