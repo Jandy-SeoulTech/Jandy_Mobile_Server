@@ -31,7 +31,7 @@ public class ImageService {
     }
 
     @Transactional
-    public void storeFiles(List<MultipartFile> multipartFiles) throws IOException {
+    public List<Image> storeFiles(List<MultipartFile> multipartFiles) throws IOException {
         List<Name> collect = new ArrayList<>();
         for(MultipartFile multipartFile : multipartFiles) {
             if(!multipartFile.isEmpty()) {
@@ -47,6 +47,8 @@ public class ImageService {
                 .map((name) -> new Image(name.getOriginalFilename(), name.getStoreFileName()))
                 .collect(Collectors.toList());
         imageRepository.saveAll(images);
+
+        return images;
     }
 
     public Image storeFile(MultipartFile multipartFile) throws IOException {
