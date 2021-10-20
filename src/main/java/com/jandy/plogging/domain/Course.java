@@ -15,6 +15,10 @@ public class Course extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String startLocation;
+
+    private String endLocation;
+
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     private List<Waypoint> waypoints = new ArrayList<>();
 
@@ -26,7 +30,9 @@ public class Course extends BaseTimeEntity {
     private Member member;
 
     @Builder
-    public Course(String estimatedTime, Integer distance, Member member) {
+    public Course(String startLocation, String endLocation, String estimatedTime, Integer distance, Member member) {
+        this.startLocation = startLocation;
+        this.endLocation = endLocation;
         this.estimatedTime = estimatedTime;
         this.distance = distance;
         this.member = member;

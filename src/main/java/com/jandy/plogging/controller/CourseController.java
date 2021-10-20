@@ -3,13 +3,11 @@ package com.jandy.plogging.controller;
 
 import com.jandy.plogging.dto.course.CreateCourseRequest;
 import com.jandy.plogging.dto.course.CreateCourseResponse;
+import com.jandy.plogging.dto.course.MyCourseListResponse;
 import com.jandy.plogging.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/courses")
@@ -24,5 +22,10 @@ public class CourseController {
                 .body(courseService.createCourse(request));
     }
 
+    @GetMapping("/{memberId}")
+    public ResponseEntity<MyCourseListResponse> myCourseList(@PathVariable Long memberId) {
+        return ResponseEntity.ok()
+                .body(courseService.myCourseList(memberId));
+    }
 
 }

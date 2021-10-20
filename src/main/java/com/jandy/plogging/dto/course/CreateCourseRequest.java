@@ -13,13 +13,9 @@ import java.util.List;
 @AllArgsConstructor
 public class CreateCourseRequest {
 
-    private String startX;
+    private String startLocation;
 
-    private String startY;
-
-    private String endX;
-
-    private String endY;
+    private String endLocation;
 
     private String time;
 
@@ -31,8 +27,10 @@ public class CreateCourseRequest {
     
     public Course toEntity(Member member) {
         return Course.builder()
-                .estimatedTime(this.getTime())
-                .distance(this.getDistance())
+                .startLocation(this.startLocation)
+                .endLocation(this.endLocation)
+                .estimatedTime(this.time)
+                .distance(this.distance)
                 .member(member)
                 .build();
     }

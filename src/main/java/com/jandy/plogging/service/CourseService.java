@@ -4,8 +4,10 @@ package com.jandy.plogging.service;
 import com.jandy.plogging.domain.Course;
 import com.jandy.plogging.domain.Member;
 import com.jandy.plogging.domain.Waypoint;
+import com.jandy.plogging.dto.course.CourseDto;
 import com.jandy.plogging.dto.course.CreateCourseRequest;
 import com.jandy.plogging.dto.course.CreateCourseResponse;
+import com.jandy.plogging.dto.course.MyCourseListResponse;
 import com.jandy.plogging.repository.CourseRepository;
 import com.jandy.plogging.repository.MemberRepository;
 import com.jandy.plogging.repository.WaypointRepository;
@@ -15,7 +17,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -44,5 +45,18 @@ public class CourseService {
 
         waypointRepository.saveAll(waypoints);
         return CreateCourseResponse.from(savedCourse);
+    }
+
+    public MyCourseListResponse myCourseList(Long memberId) {
+
+        Optional<Member> memberOptional = memberRepository.findById(memberId);
+
+        Member member = memberOptional.orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다."));
+        List<Course> courseList = courseRepository.findAllByMember(member);
+        List<CourseDto> collect = courseList.stream()
+                .map(CourseDto::from)
+                .collect(toList());
+
+        return new MyCourseListResponse(collect.size(), collect);
     }
 }
