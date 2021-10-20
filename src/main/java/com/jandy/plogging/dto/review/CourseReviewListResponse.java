@@ -1,4 +1,4 @@
-package com.jandy.plogging.dto.course;
+package com.jandy.plogging.dto.review;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

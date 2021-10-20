@@ -1,15 +1,14 @@
 package com.jandy.plogging.service;
 
 import com.jandy.plogging.domain.*;
-import com.jandy.plogging.dto.course.CourseReviewListResponse;
-import com.jandy.plogging.dto.course.CreateCourseReviewRequest;
-import com.jandy.plogging.dto.course.UpdateCourseReviewRequest;
+import com.jandy.plogging.dto.review.CourseReviewListResponse;
+import com.jandy.plogging.dto.review.CreateCourseReviewRequest;
+import com.jandy.plogging.dto.review.OtherReviewResponse;
 import com.jandy.plogging.repository.CourseRepository;
 import com.jandy.plogging.repository.MemberRepository;
 import com.jandy.plogging.repository.ReviewRepository;
 import com.jandy.plogging.repository.TourismRepository;
 import lombok.RequiredArgsConstructor;
-import org.h2.util.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +27,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final TourismRepository tourismRepository;
     private final MemberRepository memberRepository;
+    private final CourseRepository courseRepository;
 
     @Value("${fileDir}")
     private String fileDir;
@@ -89,9 +89,11 @@ public class ReviewService {
 
         Optional<Tourism> tourism = tourismRepository.findById(tourismId);
         Optional<Member> member = memberRepository.findById(request.getMemberId());
+        Optional<Course> course = courseRepository.findById(request.getCourseId());
 
-        if (tourism.isPresent() && member.isPresent()) {
+        if (tourism.isPresent() && member.isPresent() && course.isPresent()) {
             Review review = Review.builder()
+                    .course(course.get())
                     .tourism(tourism.get())
                     .content(request.getContent())
                     .rating(request.getRating())
@@ -107,6 +109,23 @@ public class ReviewService {
         }
 
     }
+
+//    @Transactional
+//    public OtherReviewResponse getOtherReview(Long reviewId) {
+//        Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
+//
+//        if (reviewOptional.isPresent()) {
+//
+//            Review review = reviewOptional.get();
+//            Member member = review.getMember();
+//            Course course = review.getCourse();
+//
+//
+//
+//        }
+//
+//
+//    }
 
 
 }
