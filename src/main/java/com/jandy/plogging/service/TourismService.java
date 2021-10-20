@@ -1,11 +1,13 @@
 package com.jandy.plogging.service;
 
 import com.jandy.plogging.domain.Image;
+import com.jandy.plogging.domain.Review;
 import com.jandy.plogging.domain.Tourism;
 import com.jandy.plogging.dto.tourism.TourismCategoryDto;
 import com.jandy.plogging.dto.tourism.TourismListResponse;
 import com.jandy.plogging.dto.tourism.TourismOneResponse;
 import com.jandy.plogging.repository.ImageRepository;
+import com.jandy.plogging.repository.ReviewRepository;
 import com.jandy.plogging.repository.TourismRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,8 @@ public class TourismService {
 
 
     private final TourismRepository tourismRepository;
+    private final ReviewService reviewService;
+    private final ReviewRepository reviewRepository;
     private final ImageService imageService;
 
 
@@ -49,7 +53,7 @@ public class TourismService {
 
         List<Tourism> tourismList = tourismRepository.findTourismsByCategory(category);
         List<TourismCategoryDto> collect = tourismList.stream()
-                .map(TourismCategoryDto::from)
+                .map(tourism -> new TourismCategoryDto(tourism.getName(), tourism.getDescription(), tourism.getImage().getStoreImageName(),reviewService.totalRating(tourism.getId()),reviewRepository.findByTourism_Id(tourism.getId()).size()))
                 .collect(toList());
 
         return new TourismListResponse(collect.size(), collect);

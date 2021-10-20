@@ -4,13 +4,15 @@ import com.jandy.plogging.domain.Course;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.LocalTime;
+
 @Getter
 @AllArgsConstructor
 public class CreateCourseResponse {
 
     private Long courseId;
 
-    private String time;
+    private LocalTime time;
 
     private Integer distance;
 

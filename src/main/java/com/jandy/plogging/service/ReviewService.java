@@ -29,7 +29,7 @@ public class ReviewService {
     private final MemberRepository memberRepository;
     private final CourseRepository courseRepository;
 
-    @Value("${fileDir}")
+    @Value("${file.dir}")
     private String fileDir;
 
     @Transactional
