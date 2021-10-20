@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Getter
@@ -13,7 +14,7 @@ public class MyReviewDetailResponse {
 
     private LocalDate localDate;
 
-    private String time;
+    private LocalTime time;
 
     private String startAddress;
 
@@ -28,7 +29,7 @@ public class MyReviewDetailResponse {
     private String tourismName;
 
     @Builder
-    public MyReviewDetailResponse(LocalDate localDate, String time, String startAddress, String endAddress, List<byte[]> images, Long rating, String content, String tourismName) {
+    public MyReviewDetailResponse(LocalDate localDate, LocalTime time, String startAddress, String endAddress, List<byte[]> images, Long rating, String content, String tourismName) {
         this.localDate = localDate;
         this.time = time;
         this.startAddress = startAddress;

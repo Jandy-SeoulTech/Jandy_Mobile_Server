@@ -22,10 +22,4 @@ public class CourseController {
                 .body(courseService.createCourse(request));
     }
 
-    @GetMapping("/{memberId}")
-    public ResponseEntity<MyCourseListResponse> myCourseList(@PathVariable Long memberId) {
-        return ResponseEntity.ok()
-                .body(courseService.myCourseList(memberId));
-    }
-
 }
