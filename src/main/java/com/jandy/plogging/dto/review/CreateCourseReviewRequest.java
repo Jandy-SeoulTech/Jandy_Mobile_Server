@@ -1,4 +1,4 @@
-package com.jandy.plogging.dto.course;
+package com.jandy.plogging.dto.review;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +17,8 @@ public class CreateCourseReviewRequest {
     private String content;
 
     private List<MultipartFile> file;
+
+    private Long courseId;
 
 
 }

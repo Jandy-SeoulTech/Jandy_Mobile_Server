@@ -1,19 +1,16 @@
 package com.jandy.plogging.controller;
 
 import com.jandy.plogging.domain.Image;
-import com.jandy.plogging.dto.course.CreateCourseReviewRequest;
-import com.jandy.plogging.dto.course.CourseReviewListResponse;
-import com.jandy.plogging.dto.course.UpdateCourseReviewRequest;
+import com.jandy.plogging.dto.review.CreateCourseReviewRequest;
+import com.jandy.plogging.dto.review.CourseReviewListResponse;
+import com.jandy.plogging.dto.review.OtherReviewResponse;
 import com.jandy.plogging.service.ImageService;
 import com.jandy.plogging.service.ReviewService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 
@@ -54,10 +51,17 @@ public class ReviewController {
         return reviewService.totalRating(id);
     }
 
+    // 다른 사람 관광지 리뷰 자세히 보기
+    @GetMapping("/review/{locationId}/{reviewId}")
+    public OtherReviewResponse getOtherReview(@PathVariable String locationId, @PathVariable String reviewId) {
+        Long id = Long.parseLong(reviewId);
+        return reviewService.getOtherReview(id);
+    }
+
 
     @Data
     @AllArgsConstructor
-    static class UpdateCourseReviewResponse{
+    static class UpdateCourseReviewResponse {
         private Long courseReviewId;
     }
 

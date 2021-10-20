@@ -1,7 +1,5 @@
 package com.jandy.plogging.domain;
 
-import com.jandy.plogging.dto.course.CreateCourseReviewRequest;
-import com.jandy.plogging.dto.course.UpdateCourseReviewRequest;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,17 +28,22 @@ public class Review extends BaseTimeEntity{
     @JoinColumn(name = "tourism_id")
     private Tourism tourism;
 
-    @OneToMany(mappedBy="review")
+    @OneToOne
+    @JoinColumn(name="course_id")
+    private Course course;
+
+    @OneToMany
     private List<Image> imageList;
 
     private String content;
 
     @Builder
-    public Review(Member member, Long rating, Tourism tourism, List<Image> images, String content) {
+    public Review(Member member, Long rating, Tourism tourism, List<Image> images, String content, Course course) {
         this.member = member;
         this.rating = rating;
         this.tourism = tourism;
         this.imageList = images;
         this.content = content;
+        this.course = course;
     }
 }
