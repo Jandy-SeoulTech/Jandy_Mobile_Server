@@ -15,8 +15,6 @@ import javax.persistence.OneToOne;
 @AllArgsConstructor
 public class TourismOneResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;

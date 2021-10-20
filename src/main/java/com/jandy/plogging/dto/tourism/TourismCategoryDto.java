@@ -8,6 +8,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class TourismCategoryDto {
 
+    private Long id;
+
     private String name;
 
     private String description;

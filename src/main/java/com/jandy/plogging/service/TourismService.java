@@ -53,7 +53,7 @@ public class TourismService {
 
         List<Tourism> tourismList = tourismRepository.findTourismsByCategory(category);
         List<TourismCategoryDto> collect = tourismList.stream()
-                .map(tourism -> new TourismCategoryDto(tourism.getName(), tourism.getDescription(), tourism.getImage().getStoreImageName(),reviewService.totalRating(tourism.getId()),reviewRepository.findByTourism_Id(tourism.getId()).size()))
+                .map(tourism -> new TourismCategoryDto(tourism.getId(), tourism.getName(), tourism.getDescription(), tourism.getImage().getStoreImageName(),reviewService.totalRating(tourism.getId()),reviewRepository.findByTourism_Id(tourism.getId()).size()))
                 .collect(toList());
 
         return new TourismListResponse(collect.size(), collect);
