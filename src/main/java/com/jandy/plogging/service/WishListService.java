@@ -51,10 +51,10 @@ public class WishListService {
                 .map((wishList) -> wishList.getTourism().getId())
                 .collect(Collectors.toList());
 
-        List<Tourism> tourismList = tourismRepository.findTourismsByIds(tourismIds);
+        List<Tourism> tourismList = tourismRepository.findAllById(tourismIds);
 
         List<TourismDto> tourismDtoList = tourismList.stream()
-                .map(this::createTourismDto)
+                .map(TourismDto::from)
                 .collect(Collectors.toList());
 
         List<WishListDto> collect = new ArrayList<>();
@@ -82,10 +82,6 @@ public class WishListService {
         Member member = memberOptional.orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다"));
         wishListRepository.deleteAllByIdInQuery(request.getWishListIds(), member);
 
-    }
-
-    private TourismDto createTourismDto(Tourism tourism) {
-        return new TourismDto(tourism.getId(), tourism.getName(), tourism.getDescription(), tourism.getAddress(), tourism.getPhoneNumber(), tourism.getOperatingTime());
     }
 
 }

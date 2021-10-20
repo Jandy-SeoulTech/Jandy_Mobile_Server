@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 
 @Api(tags = "회원")
@@ -55,7 +56,7 @@ public class MemberController {
 
     @ApiOperation(value = "카카오 로그인")
     @GetMapping("/oauthKakao")
-    public ResponseEntity<MemberOAuthResponse> kakaoLogin(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
+    public ResponseEntity<MemberOAuthResponse> kakaoLogin(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws IOException {
         String access_token = servletRequest.getHeader("Authorization");
         MemberOAuthResponse oAuthResponse = memberService.kakaoApi(access_token);
         Long memberId = oAuthResponse.getId();

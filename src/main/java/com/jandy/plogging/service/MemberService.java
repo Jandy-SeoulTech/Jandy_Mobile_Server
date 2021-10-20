@@ -10,15 +10,10 @@ import com.jandy.plogging.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+
+import java.io.*;
+import java.net.*;
 import java.util.Optional;
-import java.net.URLConnection;
 
 
 @RequiredArgsConstructor
@@ -75,7 +70,7 @@ public class MemberService {
     }
   
     @Transactional
-    public MemberOAuthResponse kakaoApi(String accessToken) {
+    public MemberOAuthResponse kakaoApi(String accessToken) throws IOException {
         String apiUrl = "https://kapi.kakao.com/v2/user/me";
         String responseBody = get(apiUrl, accessToken);
 

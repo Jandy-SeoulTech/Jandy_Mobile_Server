@@ -1,6 +1,8 @@
 package com.jandy.plogging.dto.course;
 
 
+import com.jandy.plogging.domain.Course;
+import com.jandy.plogging.domain.Member;
 import com.jandy.plogging.dto.waypoint.WaypointDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,13 +13,9 @@ import java.util.List;
 @AllArgsConstructor
 public class CreateCourseRequest {
 
-    private String startX;
+    private String startLocation;
 
-    private String startY;
-
-    private String endX;
-
-    private String endY;
+    private String endLocation;
 
     private String time;
 
@@ -26,5 +24,15 @@ public class CreateCourseRequest {
     private Long memberId;
 
     private List<WaypointDto> waypoints;
+    
+    public Course toEntity(Member member) {
+        return Course.builder()
+                .startLocation(this.startLocation)
+                .endLocation(this.endLocation)
+                .estimatedTime(this.time)
+                .distance(this.distance)
+                .member(member)
+                .build();
+    }
 
 }

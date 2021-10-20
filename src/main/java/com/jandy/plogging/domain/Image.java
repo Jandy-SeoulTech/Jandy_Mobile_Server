@@ -4,18 +4,17 @@ import lombok.Getter;
 
 import javax.persistence.*;
 
-@Getter
 @Entity
+@Getter
 public class Image extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String uploadImageName;
-
     private String storeImageName;
 
+    private String uploadImageName;
 
     public Image(String uploadImageName, String storeImageName) {
         this.uploadImageName = uploadImageName;

@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface TourismRepository extends JpaRepository<Tourism, Long> {
 
-    @Query("select t from Tourism as t where t.id in :ids")
-    List<Tourism> findTourismsByIds(@Param("ids") List<Long> ids);
+    List<Tourism> findTourismsByCategory(String Category);
 
 }
