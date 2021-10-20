@@ -110,22 +110,27 @@ public class ReviewService {
 
     }
 
-//    @Transactional
-//    public OtherReviewResponse getOtherReview(Long reviewId) {
-//        Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
-//
-//        if (reviewOptional.isPresent()) {
-//
-//            Review review = reviewOptional.get();
-//            Member member = review.getMember();
-//            Course course = review.getCourse();
-//
-//
-//
-//        }
-//
-//
-//    }
+    @Transactional
+    public OtherReviewResponse getOtherReview(Long reviewId) {
+        Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
+
+        if (reviewOptional.isPresent()) {
+
+            Review review = reviewOptional.get();
+            Member member = review.getMember();
+            Course course = review.getCourse();
+
+            OtherReviewResponse otherReviewResponse= OtherReviewResponse.builder()
+                    .content(review.getContent())
+                    .localDate(review.getCreatedDate().toLocalDate())
+                    .endAddress(course).build()
+
+
+
+        }
+
+
+    }
 
 
 }
