@@ -52,11 +52,11 @@ public class ReviewController {
     }
 
     // 다른 사람 관광지 리뷰 자세히 보기
-    @GetMapping("/review/{locationId}/{reviewId}")
-    public OtherReviewResponse getOtherReview(@PathVariable String locationId, @PathVariable String reviewId) {
-        Long id = Long.parseLong(reviewId);
-        return reviewService.getOtherReview(id);
-    }
+//    @GetMapping("/review/{locationId}/{reviewId}")
+//    public OtherReviewResponse getOtherReview(@PathVariable String locationId, @PathVariable String reviewId) {
+//        Long id = Long.parseLong(reviewId);
+//        return reviewService.getOtherReview(locationId, id);
+//    }
 
 
     @Data

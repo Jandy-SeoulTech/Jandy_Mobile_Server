@@ -7,6 +7,7 @@ import com.jandy.plogging.dto.waypoint.WaypointDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Getter
@@ -17,7 +18,7 @@ public class CreateCourseRequest {
 
     private String endLocation;
 
-    private String time;
+    private LocalTime time;
 
     private Integer distance;
 
