@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class TourismDto {
+
     private Long id;
 
     private String name;
