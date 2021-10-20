@@ -32,6 +32,6 @@ public class TourismOneResponse {
     private String thumbnailImage;
 
     public static TourismOneResponse from(Tourism tourism) {
-        return new TourismOneResponse(tourism.getId(), tourism.getName(), tourism.getAddress(), tourism.getPhoneNumber(), tourism.getOperatingTime(), tourism.getCategory(), tourism.getImages().get(0).getStoreImageName());
+        return new TourismOneResponse(tourism.getId(), tourism.getName(), tourism.getAddress(), tourism.getPhoneNumber(), tourism.getOperatingTime(), tourism.getCategory(), tourism.getImage().getStoreImageName());
     }
 }

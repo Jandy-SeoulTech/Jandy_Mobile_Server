@@ -27,8 +27,8 @@ public class Tourism {
 
     private String category;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Image> images = new ArrayList<>();
+    @OneToOne
+    private Image image;
 
     public Tourism(String name, String description, String address, String phoneNumber, String operatingTime, String category) {
         this.name = name;
@@ -37,10 +37,6 @@ public class Tourism {
         this.phoneNumber = phoneNumber;
         this.operatingTime = operatingTime;
         this.category = category;
-    }
-
-    public void addImage(Image image) {
-        images.add(image);
     }
 
     protected Tourism() {}

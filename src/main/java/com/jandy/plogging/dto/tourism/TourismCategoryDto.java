@@ -15,6 +15,6 @@ public class TourismCategoryDto {
     private String imageName;
 
     public static TourismCategoryDto from(Tourism tourism) {
-        return new TourismCategoryDto(tourism.getName(), tourism.getDescription(), tourism.getImages().get(0).getStoreImageName());
+        return new TourismCategoryDto(tourism.getName(), tourism.getDescription(), tourism.getImage().getStoreImageName());
     }
 }
