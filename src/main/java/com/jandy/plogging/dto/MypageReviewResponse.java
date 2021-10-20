@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class MypageReviewResponse {
 
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
     private String touismName;
 
@@ -23,15 +24,12 @@ public class MypageReviewResponse {
 
     private List<byte[]> images;
 
-    private Long courseId;
-
     @Builder
-    public MypageReviewResponse(LocalDateTime createdAt, String tourismName, Long rating, String content, List<byte[]> images, Long courseId) {
+    public MypageReviewResponse(LocalDate createdAt, String tourismName, Long rating, String content, List<byte[]> images) {
         this.createdAt = createdAt;
         this.touismName = tourismName;
         this.rating = rating;
         this.content = content;
         this.images = images;
-        this.courseId = courseId;
     }
 }
