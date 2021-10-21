@@ -1,6 +1,8 @@
 package com.jandy.plogging.controller;
 
 
+import com.jandy.plogging.dto.tourism.TourismListResponse;
+import com.jandy.plogging.dto.tourism.TourismOneResponse;
 import com.jandy.plogging.service.TourismService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -27,12 +29,12 @@ public class TourismController {
     }
 
     @GetMapping("/list/{category}")
-    public ResponseEntity listByCategory(@PathVariable String category) {
+    public ResponseEntity<TourismListResponse> listByCategory(@PathVariable String category) {
         return ResponseEntity.ok().body(tourismService.readByCategory(category));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity readTourism(@PathVariable Long id) {
+    public ResponseEntity<TourismOneResponse> readTourism(@PathVariable Long id) {
         return ResponseEntity.ok().body(tourismService.readOneById(id));
     }
 
