@@ -3,8 +3,10 @@ package com.jandy.plogging.service;
 import com.jandy.plogging.domain.Image;
 import com.jandy.plogging.domain.Review;
 import com.jandy.plogging.domain.Tourism;
+import com.jandy.plogging.dto.ListResponse;
 import com.jandy.plogging.dto.tourism.TourismCategoryDto;
 import com.jandy.plogging.dto.tourism.TourismListResponse;
+import com.jandy.plogging.dto.tourism.TourismNameDto;
 import com.jandy.plogging.dto.tourism.TourismOneResponse;
 import com.jandy.plogging.repository.ImageRepository;
 import com.jandy.plogging.repository.ReviewRepository;
@@ -65,6 +67,16 @@ public class TourismService {
         Tourism tourism = tourismOptional.orElseThrow(() -> new IllegalStateException("존재하지 않는 관광지 입니다."));
 
         return TourismOneResponse.from(tourism);
+    }
+
+    public ListResponse getTourismByName(String name) {
+
+        List<Tourism> tourismList = tourismRepository.findTourismsByName(name);
+        List<TourismNameDto> collect = tourismList.stream()
+                .map(tourism -> new TourismNameDto(tourism.getId(), tourism.getName(), tourism.getDescription(), tourism.getImage().getStoreImageName(), reviewService.totalRating(tourism.getId()), reviewRepository.findByTourism_Id(tourism.getId()).size()))
+                .collect(toList());
+
+        return new ListResponse(collect.size(), collect);
     }
 
 }

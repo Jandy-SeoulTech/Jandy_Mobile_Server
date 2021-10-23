@@ -11,4 +11,6 @@ public interface TourismRepository extends JpaRepository<Tourism, Long> {
 
     List<Tourism> findTourismsByCategory(String Category);
 
+    List<Tourism> findTourismsByName(String name);
+
 }
