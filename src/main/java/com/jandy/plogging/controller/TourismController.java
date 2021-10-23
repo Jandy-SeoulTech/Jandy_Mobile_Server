@@ -1,6 +1,7 @@
 package com.jandy.plogging.controller;
 
 
+import com.jandy.plogging.dto.ListResponse;
 import com.jandy.plogging.dto.tourism.TourismListResponse;
 import com.jandy.plogging.dto.tourism.TourismOneResponse;
 import com.jandy.plogging.service.TourismService;
@@ -36,6 +37,11 @@ public class TourismController {
     @GetMapping("/{id}")
     public ResponseEntity<TourismOneResponse> readTourism(@PathVariable Long id) {
         return ResponseEntity.ok().body(tourismService.readOneById(id));
+    }
+
+    @GetMapping("/query/{name}")
+    public ResponseEntity<ListResponse> getTourismByName(@PathVariable String name) {
+        return ResponseEntity.ok().body(tourismService.getTourismByName(name));
     }
 
 
