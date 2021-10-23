@@ -46,7 +46,7 @@ public class TourismService {
         String operatingTime = servletRequest.getParameter("operatingTime");
         String category = servletRequest.getParameter("category");
 
-        Tourism tourism = new Tourism(name, description, address, phoneNumber, operatingTime, category);
+        Tourism tourism = new Tourism(name, description, address, phoneNumber, operatingTime, category, image);
         tourismRepository.save(tourism);
 
     }
