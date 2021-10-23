@@ -30,13 +30,14 @@ public class Tourism {
     @OneToOne
     private Image image;
 
-    public Tourism(String name, String description, String address, String phoneNumber, String operatingTime, String category) {
+    public Tourism(String name, String description, String address, String phoneNumber, String operatingTime, String category, Image image) {
         this.name = name;
         this.description = description;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.operatingTime = operatingTime;
         this.category = category;
+        this.image = image;
     }
 
     protected Tourism() {}
