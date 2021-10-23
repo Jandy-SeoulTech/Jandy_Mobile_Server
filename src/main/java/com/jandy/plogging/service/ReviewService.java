@@ -41,7 +41,9 @@ public class ReviewService {
             sum += review.getRating();
         }
 
-        return sum / list.size();
+        if(list.size() == 0) {
+            return 0L;
+        } else return sum / list.size();
     }
 
     @Transactional
