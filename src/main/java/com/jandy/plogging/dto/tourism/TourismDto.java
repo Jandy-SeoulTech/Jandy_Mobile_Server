@@ -20,7 +20,9 @@ public class TourismDto {
 
     private String operatingTime;
 
+    private String homepage;
+
     public static TourismDto from(Tourism tourism) {
-        return new TourismDto(tourism.getId(), tourism.getName(), tourism.getDescription(), tourism.getAddress(), tourism.getPhoneNumber(), tourism.getOperatingTime());
+        return new TourismDto(tourism.getId(), tourism.getName(), tourism.getDescription(), tourism.getAddress(), tourism.getPhoneNumber(), tourism.getHomepage(), tourism.getOperatingTime());
     }
 }

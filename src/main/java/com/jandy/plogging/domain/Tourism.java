@@ -27,16 +27,19 @@ public class Tourism {
 
     private String category;
 
+    private String homepage;
+
     @OneToOne
     private Image image;
 
-    public Tourism(String name, String description, String address, String phoneNumber, String operatingTime, String category, Image image) {
+    public Tourism(String name, String description, String address, String phoneNumber, String operatingTime, String category, String homepage, Image image) {
         this.name = name;
         this.description = description;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.operatingTime = operatingTime;
         this.category = category;
+        this.homepage = homepage;
         this.image = image;
     }
 

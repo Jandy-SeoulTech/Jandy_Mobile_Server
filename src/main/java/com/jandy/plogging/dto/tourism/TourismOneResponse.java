@@ -27,9 +27,11 @@ public class TourismOneResponse {
 
     private String category;
 
+    private String homepage;
+
     private String thumbnailImage;
 
     public static TourismOneResponse from(Tourism tourism) {
-        return new TourismOneResponse(tourism.getId(), tourism.getName(), tourism.getAddress(), tourism.getPhoneNumber(), tourism.getOperatingTime(), tourism.getCategory(), tourism.getImage().getStoreImageName());
+        return new TourismOneResponse(tourism.getId(), tourism.getName(), tourism.getAddress(), tourism.getPhoneNumber(), tourism.getOperatingTime(), tourism.getCategory(), tourism.getHomepage() ,tourism.getImage().getStoreImageName());
     }
 }
