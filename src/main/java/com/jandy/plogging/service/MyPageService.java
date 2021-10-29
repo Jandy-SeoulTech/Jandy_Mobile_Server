@@ -49,6 +49,7 @@ public class MyPageService {
             Course course = review.getCourse();
 
              myReviewDetailResponse= myReviewDetailResponse.builder()
+                     .courseId(review.getCourse().getId())
                     .content(review.getContent())
                     .localDate(review.getCreatedDate().toLocalDate())
                     .endAddress(course.getEndLocation())
