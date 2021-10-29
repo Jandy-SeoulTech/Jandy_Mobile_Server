@@ -12,6 +12,8 @@ import java.time.LocalTime;
 @AllArgsConstructor
 public class CourseDto {
 
+    private Long courseId;
+
     private String startLocation;
 
     private String endLocation;
@@ -23,7 +25,7 @@ public class CourseDto {
     private LocalDate createdAt;
 
     public static CourseDto from(Course course) {
-        return new CourseDto(course.getStartLocation(), course.getEndLocation(), course.getDistance(), course.getEstimatedTime(),course.getCreatedDate().toLocalDate());
+        return new CourseDto(course.getId(), course.getStartLocation(), course.getEndLocation(), course.getDistance(), course.getEstimatedTime(),course.getCreatedDate().toLocalDate());
     }
 
 }

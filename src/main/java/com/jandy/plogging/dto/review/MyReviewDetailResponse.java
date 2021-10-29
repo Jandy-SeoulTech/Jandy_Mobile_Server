@@ -12,8 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 public class MyReviewDetailResponse {
 
-    private Long courseId;
-
     private LocalDate localDate;
 
     private LocalTime time;
@@ -31,8 +29,7 @@ public class MyReviewDetailResponse {
     private String tourismName;
 
     @Builder
-    public MyReviewDetailResponse(Long courseId, LocalDate localDate, LocalTime time, String startAddress, String endAddress, List<byte[]> images, Long rating, String content, String tourismName) {
-        this.courseId = courseId;
+    public MyReviewDetailResponse(LocalDate localDate, LocalTime time, String startAddress, String endAddress, List<byte[]> images, Long rating, String content, String tourismName) {
         this.localDate = localDate;
         this.time = time;
         this.startAddress = startAddress;
